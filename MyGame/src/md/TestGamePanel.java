@@ -71,10 +71,10 @@ public class TestGamePanel extends JPanel {
     	 double secondAngel2 = secondAngel * Math.PI / 180;
     	 
     	 
-    	 int endX = (int)(x22 + 140 * Math.sin(secondAngel2));
-    	 int endY = (int)(y22 + 140 * Math.cos(secondAngel2));
+    	 //int endX = (int)(x22 + 140 * Math.sin(secondAngel2));
+    	 //int endY = (int)(y22 + 140 * Math.cos(secondAngel2));
     	 
-    	 g.drawLine(x22, y22, endX, endY);
+    	 //g.drawLine(x22, y22, endX, endY);
      }
 
      
