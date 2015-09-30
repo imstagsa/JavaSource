@@ -62,52 +62,82 @@ public class TestGamePanel extends JPanel {
 		 System.out.println("randomNum=" + border + "   x21=" + x21 + "   y21=" + y21 + "   x22=" + x22 + "   y22=" + y22);
 		 
     	 g.drawLine(x21, y21, x22, y22);
-    	 getAngel(x21, y21, x22, y22, border);    	 
+    	 double angel = getAngel(x21, y21, x22, y22, border);
+    	 System.out.println(angel);
+    	 double secondAngel = 180; // - angel;
+    	 System.out.println(secondAngel);
+    	 
+    	 // draw second line
+    	 double secondAngel2 = secondAngel * Math.PI / 180;
+    	 
+    	 
+    	 int endX = (int)(x22 + 140 * Math.sin(secondAngel2));
+    	 int endY = (int)(y22 + 140 * Math.cos(secondAngel2));
+    	 
+    	 g.drawLine(x22, y22, endX, endY);
      }
 
      
+/*     public double leftSideX(double angle, int length){
+    	    double x = this.getWidth()/2 - (length * Math.cos(Math.toRadians(90-(Math.toDegrees(angle)-90))));
+    	    return x;
+    	}
+
+    	public double leftSideY(double angle, int length){
+    	    double y = this.getHeight() - (length * Math.sin(Math.toRadians(90-(Math.toDegrees(angle)-90))));
+    	    return y;
+    	}
+
+    	public double rightSideX(double angle, int length){
+    	    double x = this.getWidth()/2 + (length * Math.cos(angle));
+    	    return x;
+    	}
+
+    	public double rightSideY(double angle, int length){
+    	    double y = this.getHeight() - (length * Math.sin(angle));
+    	    return y;
+    	}*/
      
-     public void getAngel(int x21, int y21, int x22, int y22, int border)
+     
+	/**
+	 * get angel between to lines
+	 * @param x21
+	 * @param y21
+	 * @param x22
+	 * @param y22
+	 * @param border
+	 */
+     public double getAngel(int x21, int y21, int x22, int y22, int border)
      {
 
- 		int x11, y11, x12, y12;
+ 		int x11 = 0, y11 = 0, x12 = 0, y12 = 0;
  		if(border == 0)
  		{
- 			x11 = 0;
- 			y11 = 0; 
  			x12 = 600; 
- 			y12 = 0;
  		}
  		else if(border == 1)
  		{
  			x11 = 600;
- 			y11 = 0; 
  			x12 = 600; 
  			y12 = 600;
  		}
  		else if(border == 2)
  		{
- 			x11 = 0;
  			y11 = 600; 
  			x12 = 600; 
  			y12 = 600;
  		}
- 		
  		else
- 		{
- 			x11 = 0;
- 			y11 = 0; 
- 			x12 = 0; 
  			y12 = 600;
- 		}
  		
- 	    int l1x = x12 - x11; 
- 	    int l1y = y12 - y11;
+ 	    //int l1x = x12 - x11; 
+ 	    //int l1y = y12 - y11;
  	    int l2x = x22 - x21;
  	    int l2y = y22 - y21;
- 	    double atan1 = 180.0 / Math.PI * Math.atan2(l1y, l1x);
- 	    System.out.println(atan1);
+ 	    //double atan1 = 180.0 / Math.PI * Math.atan2(l1y, l1x);
  	    double atan2 = 180.0 / Math.PI * Math.atan2(l2y, l2x);
- 	    System.out.println(atan2);
+ 	    //System.out.println(atan1);
+ 	    //System.out.println(atan2);
+ 	    return atan2;
      }
 }
