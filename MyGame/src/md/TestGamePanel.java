@@ -1,4 +1,5 @@
 package md;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -33,10 +34,11 @@ public class TestGamePanel extends JPanel {
      public void paintComponent(Graphics g) {
     	 
     	 Random rand = new Random();
-    	 int x21 = rand.nextInt(600) + 1;
-    	 int y21 = rand.nextInt(600) + 1;
-    	 int border = rand.nextInt(3);
-    	 int randomNum2 = rand.nextInt(600) + 1;
+    	 int x21 = rand.nextInt(595) + 1;
+    	 int y21 = rand.nextInt(595) + 1;
+    	 //int border = rand.nextInt(3);
+    	 int border = 0;
+    	 int randomNum2 = rand.nextInt(595) + 1;
     	 int x22, y22;
 		 
 		 if(border == 0)
@@ -46,13 +48,13 @@ public class TestGamePanel extends JPanel {
 		 }
 		 else if(border == 1)
 		 {
-			 x22 = 600;
+			 x22 = 595;
 			 y22 = randomNum2;
 		 }
 		 else if(border == 2)
 		 {
 			 x22 = randomNum2;
-			 y22 = 600;
+			 y22 = 595;
 		 }
 		 else
 		 {
@@ -63,18 +65,29 @@ public class TestGamePanel extends JPanel {
 		 
     	 g.drawLine(x21, y21, x22, y22);
     	 double angel = getAngel(x21, y21, x22, y22, border);
-    	 System.out.println(angel);
-    	 double secondAngel = 180; // - angel;
-    	 System.out.println(secondAngel);
+    	
+    	 System.out.println("angel " + angel);
+    	 angel = Math.abs(angel);
+    	 
+    	 System.out.println("angel " + angel);
+    	  // - angel;
+    	 
     	 
     	 // draw second line
+    	 double secondAngel = 180;
+    	 if(border == 0)
+    	 {
+    		 if(angel < 90)
+    			 //secondAngel = 180 - angel;
+    			 secondAngel = 550 - angel;
+    		 else secondAngel = 270 + angel;
+    	 }
+    	 System.out.println("secondAngel " + secondAngel);
     	 double secondAngel2 = secondAngel * Math.PI / 180;
-    	 
-    	 
-    	 //int endX = (int)(x22 + 140 * Math.sin(secondAngel2));
-    	 //int endY = (int)(y22 + 140 * Math.cos(secondAngel2));
-    	 
-    	 //g.drawLine(x22, y22, endX, endY);
+    	 int endX = (int)(x22 + 140 * Math.sin(secondAngel2));
+    	 int endY = (int)(y22 + 140 * Math.cos(secondAngel2));
+    	 g.setColor(Color.BLUE);
+    	 g.drawLine(x22, y22, endX, endY);
      }
 
      
@@ -113,28 +126,28 @@ public class TestGamePanel extends JPanel {
  		int x11 = 0, y11 = 0, x12 = 0, y12 = 0;
  		if(border == 0)
  		{
- 			x12 = 600; 
+ 			x12 = 595; 
  		}
  		else if(border == 1)
  		{
- 			x11 = 600;
- 			x12 = 600; 
- 			y12 = 600;
+ 			x11 = 595;
+ 			x12 = 595; 
+ 			y12 = 595;
  		}
  		else if(border == 2)
  		{
- 			y11 = 600; 
- 			x12 = 600; 
- 			y12 = 600;
+ 			y11 = 595; 
+ 			x12 = 595; 
+ 			y12 = 595;
  		}
  		else
- 			y12 = 600;
+ 			y12 = 595;
  		
- 	    //int l1x = x12 - x11; 
- 	    //int l1y = y12 - y11;
+ 	    int l1x = x12 - x11; 
+ 	    int l1y = y12 - y11;
  	    int l2x = x22 - x21;
  	    int l2y = y22 - y21;
- 	    //double atan1 = 180.0 / Math.PI * Math.atan2(l1y, l1x);
+ 	    double atan1 = 180.0 / Math.PI * Math.atan2(l1y, l1x);
  	    double atan2 = 180.0 / Math.PI * Math.atan2(l2y, l2x);
  	    //System.out.println(atan1);
  	    //System.out.println(atan2);
