@@ -34,11 +34,11 @@ public class TestGamePanel extends JPanel {
      public void paintComponent(Graphics g) {
     	 
     	 Random rand = new Random();
-    	 int x21 = rand.nextInt(595) + 1;
-    	 int y21 = rand.nextInt(595) + 1;
+    	 int x21 = rand.nextInt(580) + 1;
+    	 int y21 = rand.nextInt(580) + 1;
     	 //int border = rand.nextInt(3);
-    	 int border = 0;
-    	 int randomNum2 = rand.nextInt(595) + 1;
+    	 int border = 3;
+    	 int randomNum2 = rand.nextInt(580) + 1;
     	 int x22, y22;
 		 
 		 if(border == 0)
@@ -48,13 +48,13 @@ public class TestGamePanel extends JPanel {
 		 }
 		 else if(border == 1)
 		 {
-			 x22 = 595;
+			 x22 = 580;
 			 y22 = randomNum2;
 		 }
 		 else if(border == 2)
 		 {
 			 x22 = randomNum2;
-			 y22 = 595;
+			 y22 = 580;
 		 }
 		 else
 		 {
@@ -67,21 +67,31 @@ public class TestGamePanel extends JPanel {
     	 double angel = getAngel(x21, y21, x22, y22, border);
     	
     	 System.out.println("angel " + angel);
-    	 angel = Math.abs(angel);
-    	 
-    	 System.out.println("angel " + angel);
-    	  // - angel;
-    	 
     	 
     	 // draw second line
     	 double secondAngel = 180;
     	 if(border == 0)
     	 {
-    		 if(angel < 90)
-    			 //secondAngel = 180 - angel;
-    			 secondAngel = 550 - angel;
-    		 else secondAngel = 270 + angel;
+    		 angel = Math.abs(angel);
+    		 if(angel > 90)  secondAngel = 360 - angel + 90;
+    		 else secondAngel = 360 + Math.abs(90 - angel);
+    		 
     	 }
+    	 if(border == 1)
+    	 {
+    		 secondAngel = 270 + angel;
+    	 }
+    	 if(border == 2)
+    	 {
+    		 secondAngel = 180 + Math.abs(angel) - 90;
+    	 }
+    	 if(border == 3)
+    	 {
+    		 if(angel > 0)
+    			 secondAngel = 360 + Math.abs(angel) - 90; 
+    		 else secondAngel = 90 +  Math.abs(angel) - 90;
+    	 }
+    	 
     	 System.out.println("secondAngel " + secondAngel);
     	 double secondAngel2 = secondAngel * Math.PI / 180;
     	 int endX = (int)(x22 + 140 * Math.sin(secondAngel2));
@@ -126,31 +136,29 @@ public class TestGamePanel extends JPanel {
  		int x11 = 0, y11 = 0, x12 = 0, y12 = 0;
  		if(border == 0)
  		{
- 			x12 = 595; 
+ 			x12 = 580; 
  		}
  		else if(border == 1)
  		{
- 			x11 = 595;
- 			x12 = 595; 
- 			y12 = 595;
+ 			x11 = 580;
+ 			x12 = 580; 
+ 			y12 = 580;
  		}
  		else if(border == 2)
  		{
- 			y11 = 595; 
- 			x12 = 595; 
- 			y12 = 595;
+ 			y11 = 580; 
+ 			x12 = 580; 
+ 			y12 = 580;
  		}
  		else
- 			y12 = 595;
+ 			y12 = 580;
  		
- 	    int l1x = x12 - x11; 
- 	    int l1y = y12 - y11;
+ 	    //int l1x = x12 - x11; 
+ 	    //int l1y = y12 - y11;
  	    int l2x = x22 - x21;
  	    int l2y = y22 - y21;
- 	    double atan1 = 180.0 / Math.PI * Math.atan2(l1y, l1x);
+ 	    //double atan1 = 180.0 / Math.PI * Math.atan2(l1y, l1x);
  	    double atan2 = 180.0 / Math.PI * Math.atan2(l2y, l2x);
- 	    //System.out.println(atan1);
- 	    //System.out.println(atan2);
  	    return atan2;
      }
 }

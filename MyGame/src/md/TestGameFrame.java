@@ -13,7 +13,7 @@ public class TestGameFrame extends JFrame  {
 	public TestGameFrame() {
 		//panel.setBackground(Color.white);
 		Container c = getContentPane();
-		panel.setSize(595, 595);
+		panel.setSize(580, 580);
     	c.add(panel);
 	}
 
