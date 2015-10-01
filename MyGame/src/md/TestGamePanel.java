@@ -36,8 +36,7 @@ public class TestGamePanel extends JPanel {
     	 Random rand = new Random();
     	 int x21 = rand.nextInt(580) + 1;
     	 int y21 = rand.nextInt(580) + 1;
-    	 //int border = rand.nextInt(3);
-    	 int border = 3;
+    	 int border = rand.nextInt(3);
     	 int randomNum2 = rand.nextInt(580) + 1;
     	 int x22, y22;
 		 
@@ -93,9 +92,10 @@ public class TestGamePanel extends JPanel {
     	 }
     	 
     	 System.out.println("secondAngel " + secondAngel);
-    	 double secondAngel2 = secondAngel * Math.PI / 180;
-    	 int endX = (int)(x22 + 140 * Math.sin(secondAngel2));
-    	 int endY = (int)(y22 + 140 * Math.cos(secondAngel2));
+    	 //secondAngel = secondAngel * Math.PI / 180;
+    	 secondAngel = Math.toRadians(secondAngel);
+    	 int endX = (int)(x22 + 140 * Math.sin(secondAngel));
+    	 int endY = (int)(y22 + 140 * Math.cos(secondAngel));
     	 g.setColor(Color.BLUE);
     	 g.drawLine(x22, y22, endX, endY);
      }
@@ -158,7 +158,9 @@ public class TestGamePanel extends JPanel {
  	    int l2x = x22 - x21;
  	    int l2y = y22 - y21;
  	    //double atan1 = 180.0 / Math.PI * Math.atan2(l1y, l1x);
- 	    double atan2 = 180.0 / Math.PI * Math.atan2(l2y, l2x);
+ 	    //double atan2 = 180.0 / Math.PI * Math.atan2(l2y, l2x);
+ 	    double atan2 = Math.toDegrees(Math.atan2(l2y, l2x));
+ 	    //System.out.println("Radiants " + Math.toDegrees(Math.atan2(l2y, l2x)));
  	    return atan2;
      }
 }
