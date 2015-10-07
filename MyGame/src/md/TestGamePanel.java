@@ -74,7 +74,6 @@ public class TestGamePanel extends JPanel {
     		 angel = Math.abs(angel);
     		 if(angel > 90)  secondAngel = 360 - angel + 90;
     		 else secondAngel = 360 + Math.abs(90 - angel);
-    		 
     	 }
     	 if(border == 1)
     	 {
@@ -94,12 +93,19 @@ public class TestGamePanel extends JPanel {
     	 System.out.println("secondAngel " + secondAngel);
     	 //secondAngel = secondAngel * Math.PI / 180;
     	 secondAngel = Math.toRadians(secondAngel);
-    	 int endX = (int)(x22 + 140 * Math.sin(secondAngel));
-    	 int endY = (int)(y22 + 140 * Math.cos(secondAngel));
+    	 int endX = (int)(x22 + 600 * Math.sin(secondAngel));
+    	 int endY = (int)(y22 + 600 * Math.cos(secondAngel));
+    	 if(endX < 0) endX = 0;
+    	 if(endY < 0) endY = 0;
+    	 if(endX > 600) endX = 600;
+    	 if(endY > 600) endY = 600;
+    	 
+    	 System.out.println("randomNum=" + border + "   x23=" + x22 + "   y22=" + y22 + "   endX=" + endX + "   endY=" + endY);
     	 g.setColor(Color.BLUE);
     	 g.drawLine(x22, y22, endX, endY);
      }
 
+    
      
 /*     public double leftSideX(double angle, int length){
     	    double x = this.getWidth()/2 - (length * Math.cos(Math.toRadians(90-(Math.toDegrees(angle)-90))));
