@@ -1,5 +1,6 @@
 package md;
 
+import java.awt.geom.Line2D;
 import java.util.Random;
 
 public class MyCircle {
@@ -15,23 +16,19 @@ public class MyCircle {
 	private int radius;
 	private int border;
 	private int height;
-
 	
 
 	public MyCircle(int height)
 	{
 		this.height = height;
 		Random rand = new Random();
-		//radius = rand.nextInt(80) + 20;
+		radius = rand.nextInt(80) + 20;
 		radius = 80;
 		startX = rand.nextInt(height - radius * 2) + radius;
 		startY = rand.nextInt(height - radius * 2) + radius;
-   	 	//border = rand.nextInt(3);
-   	 	border = 0;
-   	    
+   	 	border = rand.nextInt(3);
    	 	int randomNum2 = rand.nextInt(height - radius * 2) + radius;
-   	 	//if(randomNum2 < radius) randomNum2 = radius;
-
+   	 
 		 if(border == 0)
 		 {
 			 endX = randomNum2;
@@ -55,9 +52,7 @@ public class MyCircle {
 		 curX = startX;
 		 curY = startY;
 		 getStepLength();
-		 //g.drawLine(startX, startX, endX, endY);
-		 //System.out.println("randomNum=" + border + "   startX=" + startX + "   startY=" + startY + "   endX=" + endX + "   endY=" + endY);
-		 //System.out.println("stepX=" + stepX + "   stepY=" + stepY);
+		 
 	}
 	
 	
@@ -76,9 +71,7 @@ public class MyCircle {
 		int xl = endX - startX;
 		int yl = endY - startY;
 		stepX = 1; stepY = 1;
-		System.out.println("getStepLength ---- startX " + startX + "  startY " + startY);
-		System.out.println("getStepLength ---- endX " + endX + "  endY " + endY);
-		System.out.println("getStepLength ---- xl " + xl + "  yl " + yl);
+
 		if(Math.abs(xl) < Math.abs(yl))
 		{
 			stepX = 1;
@@ -93,34 +86,37 @@ public class MyCircle {
 				stepX = (int)(Math.abs(xl) / Math.abs(yl));
 			else stepX = 1;
 		}
-	   	 //System.out.println("getStepLength ----  stepX " + stepX + " stepY " + stepY);
+		
 		if(xl < 0)
 			stepX = stepX - (stepX * 2);
 		if(yl < 0)
 			stepY = stepY - (stepY * 2);
-		
-		//System.out.println("getStepLength ----  stepX " + stepX + " stepY " + stepY);
 	}
 	
-	public void checkBorder()
+	public boolean checkBorder()
 	{
 
-		if(curY - radius <= 0)
+		if(curY - stepY <= 0)
 		{
 			border = 0;
+			return true;
 		}
 		else if(curX + radius >= this.height)
 		{
 			border = 1;
+			return true;
 		}	
 		else if(curY + radius >= this.height)
 		{
 			border = 2;
+			return true;
 		}
-		else if(curX - radius <= 0)
+		else if(curX - stepX <= 0)
 		{
 			border = 3;
+			return true;
 		}
+		return false;
 	}
 	
 	
@@ -128,38 +124,8 @@ public class MyCircle {
 	public void move()
 	{
 		
-/*		if(curX - radius <= 0)
+		if(checkBorder())
 		{
-			checkBorder();
-			endX = 0;
-			endY = curY;
-		}*/
-		if((curX + stepX  <= 0) ||
-				   (curY + stepY <= 0) ||
-				   (curX + radius >= height) ||
-				   (curY + radius >= height))
-		{
-			System.out.println("Move startX " + startX + "  startY " + startY);
-			System.out.println("Move endX " + endX + "  endY " + endY);
-			System.out.println("Move stepX " + stepX + "  stepY " + stepY);
-			System.out.println("getStepLength ----  curX " + curX + " curY " + curY + " radius " + radius);
-			checkBorder();
-			
-/*			if(border == 3)
-			{
-			   	if(Math.abs(0-curX) < stepX)
-			   	{
-			   		curX = 0;
-					curY = curY + stepY;	
-			   	}
-			   	else if(Math.abs(0-curX) == stepX)
-			   	{
-			   		curX = 0;
-					curY = curY + stepY;	
-			   	}
-			}*/
-			
-			
 			if(border == 0)
 			{
 				endX = curX;
@@ -181,7 +147,7 @@ public class MyCircle {
 				endY = curY + radius;
 			}
 		
-			double angel = getAngel(startX, startY, endX, endY, border);
+			double angel = getAngel(startX, startY, endX, endY);
 			startX = endX;
 			startY = endY;
 			
@@ -206,136 +172,37 @@ public class MyCircle {
 	    			 secondAngel = 360 + Math.abs(angel) - 90; 
 	    		 else secondAngel = 90 +  Math.abs(angel) - 90;
 	    	 }
-	    	 //System.out.println("secondAngel " + angel);
-	    	 //System.out.println("secondAngel " + secondAngel);
-	    	 //System.out.println("stepX border " + stepX);
-	    	 //System.out.println("stepY border" + stepY);
-	    	 //secondAngel = secondAngel * Math.PI / 180;
-	    	 //System.out.println("Move1 startX " + startX + "  startY " + startY);
-			 //System.out.println("Move1 endX " + endX + "  endY " + endY);
 	    	 secondAngel = Math.toRadians(secondAngel);
 	    	 endX = (int)(startX + 600 * Math.sin(secondAngel));
 	    	 endY = (int)(startY + 600 * Math.cos(secondAngel));
-	    	 //System.out.println("Move2 startX " + startX + "  startY " + startY);
-			 //System.out.println("Move2 endX " + endX + "  endY " + endY);
-			 //System.out.println("stepX " + stepX + " stepY " + stepY);
 			 getStepLength();
-		   	 //System.out.println("stepX " + stepX + " stepY " + stepY);
-	    	 //curX = startX + stepX ;
-			 //curY = startY + stepY + radius;
-		   	curX = curX + stepX;
-			curY = curY + stepY;
-			
+		   	 curX = curX + stepX;
+			 curY = curY + stepY;
 		}
-		
-		
-		
-/*		if((curX - radius <= 0) ||
-		   (curY - radius <= 0) ||
-		   (curX + radius >= height) ||
-		   (curY + radius >= height))
-		{
-			System.out.println("Move3 startX " + startX + "  startY " + startY);
-			System.out.println("Move3 endX " + endX + "  endY " + endY);
-			checkBorder();
-			if(stepX > 0) endX = curX + radius;
-			else endX = curX - radius;
-			if(stepY > 0) endY = curY + radius;
-			else endY = curY - radius;
-			
-			System.out.println("Move4 startX " + startX + "  startY " + startY);
-			System.out.println("Move4 endX " + endX + "  endY " + endY);
-			double angel = getAngel(startX, startY, endX, endY, border);
-			startX = endX;
-			startY = endY;
-			
-			double secondAngel = 180;
-	    	 if(border == 0)
-	    	 {
-	    		 angel = Math.abs(angel);
-	    		 if(angel > 90)  secondAngel = 360 - angel + 90;
-	    		 else secondAngel = 360 + Math.abs(90 - angel);
-	    	 }
-	    	 if(border == 1)
-	    	 {
-	    		 secondAngel = 270 + angel;
-	    	 }
-	    	 if(border == 2)
-	    	 {
-	    		 secondAngel = 180 + Math.abs(angel) - 90;
-	    	 }
-	    	 if(border == 3)
-	    	 {
-	    		 if(angel > 0)
-	    			 secondAngel = 360 + Math.abs(angel) - 90; 
-	    		 else secondAngel = 90 +  Math.abs(angel) - 90;
-	    	 }
-	    	 System.out.println("secondAngel " + angel);
-	    	 System.out.println("secondAngel " + secondAngel);
-	    	 //System.out.println("stepX border " + stepX);
-	    	 //System.out.println("stepY border" + stepY);
-	    	 //secondAngel = secondAngel * Math.PI / 180;
-	    	 System.out.println("Move startX " + startX + "  startY " + startY);
-				System.out.println("Move endX " + endX + "  endY " + endY);
-	    	 secondAngel = Math.toRadians(secondAngel);
-	    	 endX = (int)(startX + 140 * Math.sin(secondAngel));
-	    	 endY = (int)(startY + 140 * Math.cos(secondAngel));
-	    	 System.out.println("Move2 startX " + startX + "  startY " + startY);
-				System.out.println("Move2 endX " + endX + "  endY " + endY);
-	    	 getStepLength();
-	    	 curX = startX + stepX;
-			 curY = startY + stepY;
-	    	 
-		}*/
 		else
 		{
 			curX = curX + stepX;
 			curY = curY + stepY;
-			//System.out.println("curX " + curX);
-	    	//System.out.println("curY " + curY);
 		}
-		
 	}
 	
-	/**
-	 * get angel between to lines
-	 * @param x21
-	 * @param y21
-	 * @param x22
-	 * @param y22
-	 * @param border
-	 */
-     public double getAngel(int x21, int y21, int x22, int y22, int border)
-     {
-
- 		int x11 = radius, y11 = radius, x12 = radius, y12 = radius;
- 		if(border == 0)
- 		{
- 			x12 = height - radius; 
- 		}
- 		else if(border == 1)
- 		{
- 			x11 = height  - radius;
- 			x12 = height - radius; 
- 			y12 = height - radius;
- 		}
- 		else if(border == 2)
- 		{
- 			y11 = height - radius; 
- 			x12 = height - radius; 
- 			y12 = height - radius;
- 		}
- 		else
- 			y12 = height - radius;
- 		
- 	    //int l1x = x12 - x11; 
- 	    //int l1y = y12 - y11;
+     public double getAngel(int x21, int y21, int x22, int y22)
+     {	
  	    int l2x = x22 - x21;
  	    int l2y = y22 - y21;
- 	    //double atan1 = 180.0 / Math.PI * Math.atan2(l1y, l1x);
- 	    //double atan2 = 180.0 / Math.PI * Math.atan2(l2y, l2x);
  	    double atan2 = Math.toDegrees(Math.atan2(l2y, l2x));
- 	    //System.out.println("Radiants " + Math.toDegrees(Math.atan2(l2y, l2x)));
  	    return atan2;
+     }
+     
+     public double angleBetween2Lines(Line2D line1, Line2D line2)
+     {
+    	 double atan2 = 0;
+    	 double slope1 = (line1.getY1() - line1.getY2()) / (line1.getX1() - line1.getX2());
+    	 double slope2 = (line2.getY1() - line2.getY2()) / (line2.getX1() - line2.getX2());
+         try{
+        	 atan2  = Math.atan((slope1 - slope2) / (1 - (slope1 * slope2)));
+         }
+         catch (Exception dbze){}
+         return atan2;
      }
 }
