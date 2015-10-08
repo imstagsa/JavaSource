@@ -8,12 +8,12 @@ public class TestGameFrame extends JFrame  {
 
 
 	private static final long serialVersionUID = 1L;
-	private static TestGamePanel panel = new TestGamePanel(new MyCircle(580));
+	private static TestGamePanel panel = new TestGamePanel(new MyCircle(600));
 
 	public TestGameFrame() {
 		//panel.setBackground(Color.white);
 		Container c = getContentPane();
-		panel.setSize(580, 580);
+		panel.setSize(600, 600);
     	c.add(panel);
 	}
 

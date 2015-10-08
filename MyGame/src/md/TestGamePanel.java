@@ -28,14 +28,18 @@ public class TestGamePanel extends JPanel {
 	public void paintComponent(Graphics g)
 	{
 		g.fillRect(0, 0, this.getWidth(), this.getHeight());
-
 		this.myCircle.move();
 		int r = this.myCircle.getRadius();
-		int x = this.myCircle.getCurX()-(r/2);
-		int y = this.myCircle.getCurY()-(r/2);
+		//int x = this.myCircle.getCurX()-(r/2);
+		//int y = this.myCircle.getCurY()-(r/2);
+		int x = this.myCircle.getCurX();
+		int y = this.myCircle.getCurY();
 		g.setColor(Color.RED);
-		System.out.println("x " + x + " y " + y);
+		g.drawRect (0, 0, this.getWidth(), this.getHeight()); 
+		g.setColor(Color.DARK_GRAY);
+		//System.out.println("x " + x + " y " + y);
 		g.fillOval(x,y,r,r);
+		g.fillOval(0,0,r,r);
 	}
 
 /*	public void getSecondLine()
