@@ -62,7 +62,6 @@ public class MyCircle {
 	public int getCurX() {
 		return curX;
 	}
-
 	public int getCurY() {
 		return curY;
 	}
@@ -75,28 +74,26 @@ public class MyCircle {
 		int xl = endX - startX;
 		int yl = endY - startY;
 		stepX = 1; stepY = 1;
-		//System.out.println("startX " + startX + "  startY " + startY);
-		//System.out.println("endX " + endX + "  endY " + endY);
-		System.out.println("xl " + xl + "  yl " + yl);
+		System.out.println("getStepLength ---- startX " + startX + "  startY " + startY);
+		System.out.println("getStepLength ---- endX " + endX + "  endY " + endY);
+		System.out.println("getStepLength ---- xl " + xl + "  yl " + yl);
 		if(Math.abs(xl) < Math.abs(yl))
 		{
 			stepX = 1;
-			stepY = (int)(yl / xl);
+			stepY = (int)(Math.abs(yl) / Math.abs(xl));
 		}
 		else if(Math.abs(xl) > Math.abs(yl))
 		{
 			stepY = 1;
-			stepX = (int)(xl / yl);
+			stepX = (int)(Math.abs(xl) / Math.abs(yl));
 		}
-	   	 System.out.println("stepX " + stepX);
-	   	 System.out.println("stepY " + stepY);
+	   	 System.out.println("getStepLength ----  stepX " + stepX + " stepY " + stepY);
 		if(xl < 0)
 			stepX = stepX - (stepX * 2);
 		if(yl < 0)
 			stepY = stepY - (stepY * 2);
 		
-   	// System.out.println("stepX " + stepX);
-   	// System.out.println("stepY " + stepY);
+		System.out.println("getStepLength ----  stepX " + stepX + " stepY " + stepY);
 	}
 	
 	public void checkBorder()
@@ -118,12 +115,98 @@ public class MyCircle {
 		{
 			border = 3;
 		}
-		
 	}
+	
+	
 	
 	public void move()
 	{
+		
+/*		if(curX - radius <= 0)
+		{
+			checkBorder();
+			endX = 0;
+			endY = curY;
+		}*/
 		if((curX - radius <= 0) ||
+				   (curY - radius <= 0) ||
+				   (curX + radius >= height) ||
+				   (curY + radius >= height))
+		{
+			System.out.println("Move startX " + startX + "  startY " + startY);
+			System.out.println("Move endX " + endX + "  endY " + endY);
+			checkBorder();
+			if(border == 0)
+			{
+				endX = curX;
+				endY = 0;
+			}
+			else if(border == 1)
+			{
+				endX = curX + radius;
+				endY = curY;
+			}
+			else if(border == 2)
+			{
+				endX = curX;
+				endY = curY + radius;
+			}
+			else if(border == 3)
+			{
+				endX = 0;
+				endY = curY + radius;
+			}
+		
+			double angel = getAngel(startX, startY, endX, endY, border);
+			startX = endX;
+			startY = endY;
+			
+			double secondAngel = 180;
+	    	 if(border == 0)
+	    	 {
+	    		 angel = Math.abs(angel);
+	    		 if(angel > 90)  secondAngel = 360 - angel + 90;
+	    		 else secondAngel = 360 + Math.abs(90 - angel);
+	    	 }
+	    	 if(border == 1)
+	    	 {
+	    		 secondAngel = 270 + angel;
+	    	 }
+	    	 if(border == 2)
+	    	 {
+	    		 secondAngel = 180 + Math.abs(angel) - 90;
+	    	 }
+	    	 if(border == 3)
+	    	 {
+	    		 if(angel > 0)
+	    			 secondAngel = 360 + Math.abs(angel) - 90; 
+	    		 else secondAngel = 90 +  Math.abs(angel) - 90;
+	    	 }
+	    	 System.out.println("secondAngel " + angel);
+	    	 System.out.println("secondAngel " + secondAngel);
+	    	 //System.out.println("stepX border " + stepX);
+	    	 //System.out.println("stepY border" + stepY);
+	    	 //secondAngel = secondAngel * Math.PI / 180;
+	    	 System.out.println("Move1 startX " + startX + "  startY " + startY);
+			 System.out.println("Move1 endX " + endX + "  endY " + endY);
+	    	 secondAngel = Math.toRadians(secondAngel);
+	    	 endX = (int)(startX + 600 * Math.sin(secondAngel));
+	    	 endY = (int)(startY + 600 * Math.cos(secondAngel));
+	    	 System.out.println("Move2 startX " + startX + "  startY " + startY);
+			 System.out.println("Move2 endX " + endX + "  endY " + endY);
+			 System.out.println("stepX " + stepX + " stepY " + stepY);
+			 getStepLength();
+		   	 System.out.println("stepX " + stepX + " stepY " + stepY);
+	    	 //curX = startX + stepX ;
+			 //curY = startY + stepY + radius;
+		   	curX = curX + stepX;
+			curY = curY + stepY;
+			
+		}
+		
+		
+		
+/*		if((curX - radius <= 0) ||
 		   (curY - radius <= 0) ||
 		   (curX + radius >= height) ||
 		   (curY + radius >= height))
@@ -179,7 +262,7 @@ public class MyCircle {
 	    	 curX = startX + stepX;
 			 curY = startY + stepY;
 	    	 
-		}
+		}*/
 		else
 		{
 			curX = curX + stepX;

@@ -15,7 +15,7 @@ public class MyThread implements Runnable {
        try {
 		while(true)
 		{
-			Thread.sleep(100);
+			Thread.sleep(10);
 			panel.repaint();
 			
 		}
