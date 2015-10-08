@@ -9,9 +9,11 @@ import javax.swing.JPanel;
 
 public class TestGamePanel extends JPanel {
 
-	//List<Integer, Iteger>
+	private MyCircle myCircle;
 	
-	public TestGamePanel(){
+	public TestGamePanel(MyCircle myCircle){
+		
+		this.myCircle = myCircle;
 		
 		MouseAdapter mouseAdapter =  new MouseAdapter() {
 			@Override
@@ -22,6 +24,19 @@ public class TestGamePanel extends JPanel {
 		
 		addMouseListener(mouseAdapter);
      }
+	
+	public void paintComponent(Graphics g)
+	{
+		g.fillRect(0, 0, this.getWidth(), this.getHeight());
+
+		this.myCircle.move();
+		int r = this.myCircle.getRadius();
+		int x = this.myCircle.getCurX()-(r/2);
+		int y = this.myCircle.getCurY()-(r/2);
+		g.setColor(Color.RED);
+		System.out.println("x " + x + " y " + y);
+		g.fillOval(x,y,r,r);
+	}
 
 /*	public void getSecondLine()
 	{
@@ -31,7 +46,7 @@ public class TestGamePanel extends JPanel {
 		int endY   = y + 40 * Math.cos(angle);
 	}*/
 	
-     public void paintComponent(Graphics g) {
+/*     public void paintComponent(Graphics g) {
     	 
     	 Random rand = new Random();
     	 int x21 = rand.nextInt(580) + 1;
@@ -95,15 +110,15 @@ public class TestGamePanel extends JPanel {
     	 secondAngel = Math.toRadians(secondAngel);
     	 int endX = (int)(x22 + 600 * Math.sin(secondAngel));
     	 int endY = (int)(y22 + 600 * Math.cos(secondAngel));
-    	 if(endX < 0) endX = 0;
-    	 if(endY < 0) endY = 0;
+    	 //if(endX < 0) endX = 0;
+    	 //if(endY < 0) endY = 0;
     	 if(endX > 600) endX = 600;
     	 if(endY > 600) endY = 600;
     	 
     	 System.out.println("randomNum=" + border + "   x23=" + x22 + "   y22=" + y22 + "   endX=" + endX + "   endY=" + endY);
     	 g.setColor(Color.BLUE);
     	 g.drawLine(x22, y22, endX, endY);
-     }
+     }*/
 
     
      
@@ -136,7 +151,7 @@ public class TestGamePanel extends JPanel {
 	 * @param y22
 	 * @param border
 	 */
-     public double getAngel(int x21, int y21, int x22, int y22, int border)
+/*     public double getAngel(int x21, int y21, int x22, int y22, int border)
      {
 
  		int x11 = 0, y11 = 0, x12 = 0, y12 = 0;
@@ -168,5 +183,5 @@ public class TestGamePanel extends JPanel {
  	    double atan2 = Math.toDegrees(Math.atan2(l2y, l2x));
  	    //System.out.println("Radiants " + Math.toDegrees(Math.atan2(l2y, l2x)));
  	    return atan2;
-     }
+     }*/
 }

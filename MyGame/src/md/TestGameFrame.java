@@ -8,7 +8,7 @@ public class TestGameFrame extends JFrame  {
 
 
 	private static final long serialVersionUID = 1L;
-	private static TestGamePanel panel = new TestGamePanel();
+	private static TestGamePanel panel = new TestGamePanel(new MyCircle(580));
 
 	public TestGameFrame() {
 		//panel.setBackground(Color.white);
@@ -23,5 +23,9 @@ public class TestGameFrame extends JFrame  {
 		frame.setSize(600, 600);
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		MyThread myThread = new MyThread(panel);
+
+		   Thread thread = new Thread(myThread);
+		   thread.start();
     	}
 }
