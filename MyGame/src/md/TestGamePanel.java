@@ -3,22 +3,23 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.Random;
-
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JPanel;
 
 public class TestGamePanel extends JPanel {
 
 	private MyCircle myCircle;
+	private List<MyCircle> myCircleList = new ArrayList();
 	
 	public TestGamePanel(MyCircle myCircle){
 		
-		this.myCircle = myCircle;
+		myCircleList.add(myCircle);
 		
 		MouseAdapter mouseAdapter =  new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				//System.out.println("clicked");
+				myCircleList.add(new MyCircle(800, 600));
 			}
 		};
 		
@@ -28,164 +29,57 @@ public class TestGamePanel extends JPanel {
 	public void paintComponent(Graphics g)
 	{
 		g.fillRect(0, 0, this.getWidth(), this.getHeight());
-		this.myCircle.move();
-		int r = this.myCircle.getRadius();
-		//int x = this.myCircle.getCurX()-(r/2);
-		//int y = this.myCircle.getCurY()-(r/2);
-		int x = this.myCircle.getCurX();
-		int y = this.myCircle.getCurY();
-		g.setColor(Color.RED);
-		g.drawRect (0, 0, this.getWidth(), this.getHeight()); 
-		g.setColor(Color.DARK_GRAY);
-		//System.out.println("x " + x + " y " + y);
-		g.fillOval(x,y,r,r);
-		g.fillOval(0,0,r,r);
+		for(int i = 0; i < myCircleList.size(); i++)
+		{
+			check_collision(myCircleList.get(i));
+			myCircleList.get(i).move();
+			int r = myCircleList.get(i).getRadius();
+			int x = myCircleList.get(i).getCurX();
+			int y = myCircleList.get(i).getCurY();
+			g.setColor(Color.RED);
+			g.drawRect (0, 0, this.getWidth(), this.getHeight()); 
+			g.setColor(Color.DARK_GRAY);
+			g.fillOval(x,y,r,r);
+				
+		}
 	}
-
-/*	public void getSecondLine()
-	{
-		int startX = x;
-		int startY = y;
-		int endX   = x + 40 * Math.sin(angle);
-		int endY   = y + 40 * Math.cos(angle);
-	}*/
 	
-/*     public void paintComponent(Graphics g) {
-    	 
-    	 Random rand = new Random();
-    	 int x21 = rand.nextInt(580) + 1;
-    	 int y21 = rand.nextInt(580) + 1;
-    	 int border = rand.nextInt(3);
-    	 int randomNum2 = rand.nextInt(580) + 1;
-    	 int x22, y22;
-		 
-		 if(border == 0)
-		 {
-			 x22 = randomNum2;
-			 y22 = 0;
-		 }
-		 else if(border == 1)
-		 {
-			 x22 = 580;
-			 y22 = randomNum2;
-		 }
-		 else if(border == 2)
-		 {
-			 x22 = randomNum2;
-			 y22 = 580;
-		 }
-		 else
-		 {
-			 x22 = 0;
-			 y22 = randomNum2;
-		 }
-		 System.out.println("randomNum=" + border + "   x21=" + x21 + "   y21=" + y21 + "   x22=" + x22 + "   y22=" + y22);
-		 
-    	 g.drawLine(x21, y21, x22, y22);
-    	 double angel = getAngel(x21, y21, x22, y22, border);
-    	
-    	 System.out.println("angel " + angel);
-    	 
-    	 // draw second line
-    	 double secondAngel = 180;
-    	 if(border == 0)
-    	 {
-    		 angel = Math.abs(angel);
-    		 if(angel > 90)  secondAngel = 360 - angel + 90;
-    		 else secondAngel = 360 + Math.abs(90 - angel);
-    	 }
-    	 if(border == 1)
-    	 {
-    		 secondAngel = 270 + angel;
-    	 }
-    	 if(border == 2)
-    	 {
-    		 secondAngel = 180 + Math.abs(angel) - 90;
-    	 }
-    	 if(border == 3)
-    	 {
-    		 if(angel > 0)
-    			 secondAngel = 360 + Math.abs(angel) - 90; 
-    		 else secondAngel = 90 +  Math.abs(angel) - 90;
-    	 }
-    	 
-    	 System.out.println("secondAngel " + secondAngel);
-    	 //secondAngel = secondAngel * Math.PI / 180;
-    	 secondAngel = Math.toRadians(secondAngel);
-    	 int endX = (int)(x22 + 600 * Math.sin(secondAngel));
-    	 int endY = (int)(y22 + 600 * Math.cos(secondAngel));
-    	 //if(endX < 0) endX = 0;
-    	 //if(endY < 0) endY = 0;
-    	 if(endX > 600) endX = 600;
-    	 if(endY > 600) endY = 600;
-    	 
-    	 System.out.println("randomNum=" + border + "   x23=" + x22 + "   y22=" + y22 + "   endX=" + endX + "   endY=" + endY);
-    	 g.setColor(Color.BLUE);
-    	 g.drawLine(x22, y22, endX, endY);
-     }*/
+	public void check_collision(MyCircle circle)
+	{
+		double radius1 = circle.getRadius();
+		double X1 = circle.getCurX() - radius1 / 2;
+	    double Y1 = circle.getCurY() - radius1 / 2;
+	   
+	    
+	    for(int i = 0; i < myCircleList.size(); i++)
+		{
+			if (circle != myCircleList.get(i))
+			{
+				//System.out.println("Uraa");
+				double radius2 = myCircleList.get(i).getRadius();
+				double X2 = myCircleList.get(i).getCurX() - radius2 / 2;
+			    double Y2 = myCircleList.get(i).getCurY() - radius2 / 2;
+			       
 
-    
-     
-/*     public double leftSideX(double angle, int length){
-    	    double x = this.getWidth()/2 - (length * Math.cos(Math.toRadians(90-(Math.toDegrees(angle)-90))));
-    	    return x;
-    	}
+			    double distance = Math.pow((X1 - X2) * (X1 - X2) + (Y1 - Y2) * (Y1 - Y2), 0.5);
+			    if (radius2 >= radius1 && distance <= (radius2 - radius1)){
+			        System.out.println("Circle 1 is inside Circle 2.");
+			    }
+			    else if (radius1 >= radius2 && distance <= (radius1 - radius2) ) {
+			        System.out.println("Circle 2 is inside Circle 1.");
+			    }
+			    else if (distance > (radius1 + radius2)){
+			        //System.out.println("Circle 2 does not overlap Circle 1.");
+			    }
+			    else {
+			        System.out.println("Circle 2 overlaps Circle 1.");
+/*			        if(circle.getStepX() < 0)
+			        	circle.setStepX(circle.getStepX() + Math.abs(circle.getStepX() * 2));
+			        else if(circle.getStepX() > 0)
+			        	circle.setStepX(circle.getStepX() - Math.abs(circle.getStepX() * 2));*/
+			        }
+			    }
+			}
+		}
 
-    	public double leftSideY(double angle, int length){
-    	    double y = this.getHeight() - (length * Math.sin(Math.toRadians(90-(Math.toDegrees(angle)-90))));
-    	    return y;
-    	}
-
-    	public double rightSideX(double angle, int length){
-    	    double x = this.getWidth()/2 + (length * Math.cos(angle));
-    	    return x;
-    	}
-
-    	public double rightSideY(double angle, int length){
-    	    double y = this.getHeight() - (length * Math.sin(angle));
-    	    return y;
-    	}*/
-     
-     
-	/**
-	 * get angel between to lines
-	 * @param x21
-	 * @param y21
-	 * @param x22
-	 * @param y22
-	 * @param border
-	 */
-/*     public double getAngel(int x21, int y21, int x22, int y22, int border)
-     {
-
- 		int x11 = 0, y11 = 0, x12 = 0, y12 = 0;
- 		if(border == 0)
- 		{
- 			x12 = 580; 
- 		}
- 		else if(border == 1)
- 		{
- 			x11 = 580;
- 			x12 = 580; 
- 			y12 = 580;
- 		}
- 		else if(border == 2)
- 		{
- 			y11 = 580; 
- 			x12 = 580; 
- 			y12 = 580;
- 		}
- 		else
- 			y12 = 580;
- 		
- 	    //int l1x = x12 - x11; 
- 	    //int l1y = y12 - y11;
- 	    int l2x = x22 - x21;
- 	    int l2y = y22 - y21;
- 	    //double atan1 = 180.0 / Math.PI * Math.atan2(l1y, l1x);
- 	    //double atan2 = 180.0 / Math.PI * Math.atan2(l2y, l2x);
- 	    double atan2 = Math.toDegrees(Math.atan2(l2y, l2x));
- 	    //System.out.println("Radiants " + Math.toDegrees(Math.atan2(l2y, l2x)));
- 	    return atan2;
-     }*/
 }

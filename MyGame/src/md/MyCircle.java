@@ -15,11 +15,12 @@ public class MyCircle {
 	private int stepY;
 	private int radius;
 	private int border;
+	private int weidth;
 	private int height;
-	
 
-	public MyCircle(int height)
+	public MyCircle(int weidth, int height)
 	{
+		this.weidth = weidth;
 		this.height = height;
 		Random rand = new Random();
 		radius = rand.nextInt(80) + 20;
@@ -54,7 +55,36 @@ public class MyCircle {
 		 getStepLength();
 		 
 	}
+
+	public int getStepX() {
+		return stepX;
+	}
+
+	public void setStepX(int stepX) {
+		this.stepX = stepX;
+	}
+
+	public int getStepY() {
+		return stepY;
+	}
+
+	public void setStepY(int stepY) {
+		this.stepY = stepY;
+	}
 	
+	public void setCurX(int curX) {
+		this.curX = curX;
+	}
+
+
+	public void setCurY(int curY) {
+		this.curY = curY;
+	}
+
+
+	public void setRadius(int radius) {
+		this.radius = radius;
+	}
 	
 	public int getCurX() {
 		return curX;
@@ -101,7 +131,7 @@ public class MyCircle {
 			border = 0;
 			return true;
 		}
-		else if(curX + radius >= this.height)
+		else if(curX + radius >= this.weidth)
 		{
 			border = 1;
 			return true;
@@ -184,7 +214,7 @@ public class MyCircle {
 			curX = curX + stepX;
 			curY = curY + stepY;
 		}
-	}
+	}	
 	
      public double getAngel(int x21, int y21, int x22, int y22)
      {	
